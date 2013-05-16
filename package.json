@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "homepage": "https://github.com/jlindsey/grunt-external-daemon",
   "author": { "name": "Josh Lindsey", "email": "joshua.s.lindsey@gmail.com" },
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git@github.com:jlindsey/grunt-external-daemon.git"
