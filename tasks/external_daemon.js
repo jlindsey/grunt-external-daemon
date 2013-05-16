@@ -20,7 +20,7 @@
     var options = this.options({
       verbose: false,
       nodeSpawnOptions: {},
-      startCheck: function() { return true },
+      startCheck: function() { return true; },
       startCheckInterval: 0.5,
       startCheckTimeout: 5.0
     });
@@ -32,7 +32,7 @@
     var logFunc = (options.verbose) ? grunt.log.write : grunt.verbose.write;
     var proc, failTimeoutHandle, checkIntervalHandle, stdout = [], stderr = [];
 
-    if (!cmd || cmd.length == 0) {
+    if (!cmd || cmd.length === 0) {
       grunt.fail.warn(util.format('You must specify "cmd" for task %s', this.name));
     }
 
@@ -84,7 +84,7 @@
     });
 
     // If timeout check is set to false instead of a number, disable the timeout.
-    if (options.startCheckTimeout != false) {
+    if (options.startCheckTimeout !== false) {
       failTimeoutHandle = setTimeout(function() {
         proc.kill('SIGHUP');
         clearInterval(checkIntervalHandle);
