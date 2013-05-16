@@ -1,0 +1,19 @@
+{
+  "name": "grunt-external-daemon",
+  "description": "Grunt.js task to launch external background processes",
+  "version": "1.0.0",
+  "homepage": "https://github.com/jlindsey/grunt-external-daemon",
+  "author": { "name": "Josh Lindsey", "email": "joshua.s.lindsey@gmail.com" },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:jlindsey/grunt-external-daemon.git"
+  },
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "grunt": ">= 0.4.0"
+  },
+  "keywords": ["grunt", "node", "gruntplugin", "daemon", "development"]
+}
