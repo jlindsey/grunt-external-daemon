@@ -121,3 +121,7 @@ external_daemon: {
   }
 }
 ```
+
+## License
+
+Copyright (c) 2013 Joshua Lindsey. See LICENSE for details.
