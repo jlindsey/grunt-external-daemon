@@ -24,7 +24,7 @@
       startCheckInterval: 0.5,
       startCheckTimeout: 5.0
     });
-    var cmd = path.normalize(grunt.template.process(this.data.cmd);
+    var cmd = path.normalize(grunt.template.process(this.data.cmd));
     var args = this.data.args || [];
     var startedEventName = 'external:'+this.name+':started';
     var checkIntervalTime = (options.startCheckInterval * 1000),
