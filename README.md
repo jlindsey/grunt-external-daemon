@@ -54,7 +54,7 @@ List of options to pass to the underlying node `child_process.spawn` command. Se
 
 #### startCheck
 Type: `function(stdout, stderr)`
-Default: `function () { return true; }
+Default: `function () { return true; }`
 
 A function to check whether the process has started up and is ready. It should return `true` when whatever criteria used to determine
 readiness are met. The default is a function that simply returns `true`, meaning it will assume your process is immediately ready to go
