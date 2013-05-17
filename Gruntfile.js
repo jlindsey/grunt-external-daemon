@@ -1,7 +1,17 @@
+/*
+ * grunt-external-daemon
+ * https://github.com/jlindsey/grunt-external-daemon
+ *
+ * Copyright (c) 2013 Joshua Lindsey
+ * Licensed under the MIT license.
+ */
+ 
+'use strict';
+
 module.exports = function(grunt) {
   grunt.initConfig({
     jshint: {
-      files: ['tasks/*.js'],
+      files: ['tasks/*.js', 'Gruntfile.js'],
       options: {
         "laxcomma": true,
         "curly": true,
