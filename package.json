@@ -27,7 +27,7 @@
     "grunt-contrib-jshint": "~0.4.3",
     "grunt-contrib-nodeunit": "~0.1.2",
     "connect": "~2.7.9",
-    "jquery": "~1.8.3",
+    "jquery": "~1.8.3"
   },
   "peerDependencies": {
     "grunt": "~0.4.1"
