@@ -9,7 +9,6 @@
 'use strict';
 
 var grunt = require('grunt'),
-    exec  = require('child_process').exec,
     spawn = require('child_process').spawn,
     $     = require('jquery');
 

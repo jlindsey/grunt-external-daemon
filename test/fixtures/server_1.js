@@ -9,11 +9,14 @@
 'use strict';
 
 var connect = require('connect');
-var app = connect().use(function (req, res) { res.end(); });
+var app = connect().use(function (req, res) {
+  var obj = { hello: "world" };
+  res.end(JSON.stringify(obj)); 
+});
 
 console.log('Waiting 1 second...');
 
-setTimeout(function() { 
-  app.listen(8123);
+setTimeout(function() {
+  app.listen(8123, 'localhost');
   console.log("Listening on 8123");
 }, 1000);

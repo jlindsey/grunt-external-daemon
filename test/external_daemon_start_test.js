@@ -9,8 +9,9 @@
 'use strict';
 
 var grunt = require('grunt'),
-    exec  = require('child_process').exec,
-    spawn = require('child_process').spawn;
+    spawn = require('child_process').spawn,
+    http  = require('http'),
+    _     = require('underscore');
 
 var child;
 
@@ -43,12 +44,20 @@ exports.start_test = {
   },
 
   starts_successfully: function(test) {
-    test.expect(1);
+    test.expect(2);
 
-    exec("ps -ef | grep node | grep -v grep", function(err, stdout, stderr) {
-      var check = /node.*?server_1\.js/.test(stdout);
-      test.ok(check, 'server_1 process not started');
-      test.done();
-    });
+    setTimeout(function () {
+      http.get('http://127.0.0.1:8123/', function(res) {
+        res.setEncoding('utf-8');
+        
+        res.on('data', function(data) {
+          var obj = JSON.parse(data);
+
+          test.ok(_.isObject(obj), 'parsed object correctly');
+          test.equal(obj.hello, 'world', 'object contains correct data');
+          test.done();
+        });
+      });
+    }, 500);
   }
 };
