@@ -24,7 +24,8 @@ exports.start_test = {
   },
 
   tearDown: function(done) {
-    exec("ps -ef | grep server_1.js | grep -v grep | awk '{ print $2 }' | xargs kill", done);
+    child.on('exit', function() { done(); });
+    child.kill();
   },
 
   correct_output: function(test) {

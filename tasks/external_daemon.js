@@ -32,13 +32,13 @@
         failTimeoutTime   = (options.startCheckTimeout * 1000);
     var logFunc = (options.verbose) ? grunt.log.write : grunt.verbose.write;
     var proc, failTimeoutHandle, checkIntervalHandle, stdout = [], stderr = [];
+    var handleSig = function () { proc.kill(); done(); };
 
     // Make sure we don't leave behind any dangling processes.
-    process.on('exit', function() {
-      if (proc && proc.pid) {
-        proc.kill('SIGHUP');
-      }
-    });
+    process.on('exit', function() { proc.kill(); });
+    process.on('SIGTERM', handleSig);
+    process.on('SIGHUP', handleSig);
+    process.on('SIGINT', handleSig);
 
     if (!cmd || cmd.length === 0) {
       grunt.fail.warn(util.format('You must specify "cmd" for task %s', name));

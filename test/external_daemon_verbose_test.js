@@ -25,7 +25,8 @@ exports.verbose_test = {
   },
 
   tearDown: function(done) {
-    exec("ps -ef | grep server_3.js | grep -v grep | awk '{ print $2 }' | xargs kill", done);
+    child.on('exit', function() { done(); });
+    child.kill();
   },
 
   verbose_output: function(test) {
