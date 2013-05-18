@@ -22,28 +22,37 @@
       nodeSpawnOptions: {},
       startCheck: function() { return true; },
       startCheckInterval: 0.5,
-      startCheckTimeout: 5.0
+      startCheckTimeout: 3.0
     });
-    var cmd = path.normalize(grunt.template.process(this.data.cmd));
+    var name = this.target;
+    var cmd = this.data.cmd;
     var args = this.data.args || [];
-    var startedEventName = 'external:'+this.name+':started';
+    var startedEventName = 'external:'+this.target+':started';
     var checkIntervalTime = (options.startCheckInterval * 1000),
         failTimeoutTime   = (options.startCheckTimeout * 1000);
     var logFunc = (options.verbose) ? grunt.log.write : grunt.verbose.write;
     var proc, failTimeoutHandle, checkIntervalHandle, stdout = [], stderr = [];
 
+    // Make sure we don't leave behind any dangling processes.
+    process.on('exit', function() {
+      if (proc && proc.pid) {
+        proc.kill('SIGHUP');
+      }
+    });
+
     if (!cmd || cmd.length === 0) {
-      grunt.fail.warn(util.format('You must specify "cmd" for task %s', this.name));
+      grunt.fail.warn(util.format('You must specify "cmd" for task %s', name));
     }
 
     if (args && !_.isArray(args)) {
-      grunt.fail.warn(util.format('You must specify "args" as an array for task %s', this.name));
+      grunt.fail.warn(util.format('You must specify "args" as an array for task %s', name));
     }
 
     if (!_.isFunction(options.startCheck)) {
-      grunt.fail.warn(util.format('You must specify "startCheck" as a function for task %s', this.name));
+      grunt.fail.warn(util.format('You must specify "startCheck" as a function for task %s', name));
     }
 
+    cmd = path.normalize(grunt.template.process(cmd));
     args = _.map(args, function(arg) { return grunt.template.process(arg); });
 
     proc = grunt.util.spawn({
@@ -55,11 +64,6 @@
       grunt.verbose.write(util.format("[%s STDERR] %s"), cmd, result.stderr);
 
       grunt.log.warn(util.format("Command %s exited with status code %s", cmd, code));
-    });
-
-    // Make sure we don't leave behind any dangling processes.
-    process.on('exit', function() {
-      proc.kill('SIGHUP');
     });
 
     proc.stdout.setEncoding('utf-8');
@@ -78,7 +82,7 @@
       clearTimeout(failTimeoutHandle);
       clearInterval(checkIntervalHandle);
 
-      grunt.log.ok(util.format("Started %s", cmd));
+      grunt.log.ok(util.format("Started %s", name));
       
       done();
     });
