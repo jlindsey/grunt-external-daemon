@@ -11,7 +11,6 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     jshint: {
-      files: ['tasks/*.js', 'Gruntfile.js'],
       options: {
         "laxcomma": true,
         "curly": true,
@@ -26,13 +25,71 @@ module.exports = function(grunt) {
         "eqnull": true,
         "node": true,
         "es5": true
+      },
+      
+      files: ['Gruntfile.js', 'tasks/*.js', 'test/**/*.js']
+    },
+
+    // Configs for testing
+    external_daemon: {
+      server_1: {
+        options: {
+          startCheckInterval: 1.0,
+          startCheck: function(stdout, stderr) {
+            return (stdout.indexOf("Listening on 8123") > -1);
+          }
+        },
+        cmd: 'node',
+        args: ['test/fixtures/server_1.js']
+      },
+      server_2: {
+        options: {
+          startCheck: function(stdout, stderr) {
+            return (stdout.indexOf("Listening on 8234") > -1);
+          },
+          startCheckTimeout: 1.0
+        },
+        cmd: 'node',
+        args: ['test/fixtures/server_2.js']
+      },
+      server_2a: {
+        options: {
+          startCheck: function() { return false; },
+          startCheckTimeout: false
+        },
+        cmd: 'node',
+        args: ['test/fixtures/server_2.js']
+      },
+      server_3: {
+        options: {
+          verbose: true,
+          startCheck: function() { return false; },
+          startCheckTimeout: 5.0
+        },
+        cmd: 'node',
+        args: ['test/fixtures/server_3.js']
+      },
+      server_4: {},
+      server_4a: {
+        cmd: 'echo',
+        args: 'hello'
+      },
+      server_4b: {
+        options: {
+          startCheck: false
+        },
+        cmd: 'echo'
       }
+    },
+
+    nodeunit: {
+      all: ['test/*_test.js']
     },
 
     watch: {
       jshint: {
         files: ['<%= jshint.files %>'],
-        tasks: ['jshint'],
+        tasks: ['default'],
         options: {
           interrupt: true
         }
@@ -40,8 +97,12 @@ module.exports = function(grunt) {
     }
   });
 
+  grunt.loadTasks('tasks');
+
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('dev', ['jshint', 'watch']);
+  grunt.registerTask('default', ['jshint', 'nodeunit']);
+  grunt.registerTask('dev', ['default', 'watch']);
 };
