@@ -9,14 +9,14 @@
 'use strict';
 
 var connect = require('connect');
-var app = connect().use(function (req, res) {
-  var obj = { hello: "world" };
-  res.end(JSON.stringify(obj)); 
-});
+var app = connect().use(function (req, res) { res.end(); });
+var touch = require('touch');
 
 console.log('Waiting 1 second...');
 
 setTimeout(function() {
-  app.listen(8123, 'localhost');
+  app.listen(8123);
   console.log("Listening on 8123");
+
+  touch.sync('test/TEST_SUCCESSFUL');
 }, 1000);

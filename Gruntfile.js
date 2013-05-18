@@ -10,6 +10,10 @@
 
 module.exports = function(grunt) {
   grunt.initConfig({
+    clean: {
+      test: ['test/TEST_SUCCESSFUL']
+    },
+
     jshint: {
       options: {
         "laxcomma": true,
@@ -38,15 +42,6 @@ module.exports = function(grunt) {
           startCheck: function(stdout, stderr) {
             return (stdout.indexOf("Listening on 8123") > -1);
           }
-        },
-        cmd: 'node',
-        args: ['test/fixtures/server_1.js']
-      },
-      server_1a: {
-        options: {
-          startCheckInterval: 5.0,
-          startCheck: function() { return false; },
-          startCheckTimeout: false
         },
         cmd: 'node',
         args: ['test/fixtures/server_1.js']
@@ -107,11 +102,12 @@ module.exports = function(grunt) {
   });
 
   grunt.loadTasks('tasks');
-
+  
+  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('default', ['jshint', 'nodeunit']);
+  grunt.registerTask('default', ['jshint', 'nodeunit', 'clean']);
   grunt.registerTask('dev', ['default', 'watch']);
 };

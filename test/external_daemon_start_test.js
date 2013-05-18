@@ -15,7 +15,7 @@ var grunt = require('grunt'),
 
 var child;
 
-exports.output_test = {
+exports.start_test = {
   setUp: function(done) {
     child = spawn('grunt', ['external_daemon:server_1', '--stack']);
     child.stdout.setEncoding('utf-8');
@@ -41,35 +41,12 @@ exports.output_test = {
         child.stdout.removeAllListeners('data');
       }
     });
-  }
-};
-
-exports.start_test = {
-  setUp: function(done) {
-    child = spawn('grunt', ['external_daemon:server_1', '--stack']);
-    child.stdout.setEncoding('utf-8');
-
-    setTimeout(done, 1100);
-  },
-
-  tearDown: function(done) {
-    child.on('exit', function() { done(); });
-    child.kill();
   },
 
   starts_successfully: function(test) {
-    test.expect(2);
+    test.expect(1);
 
-    http.get('http://127.0.0.1:8123/', function(res) {
-      res.setEncoding('utf-8');
-      
-      res.on('data', function(data) {
-        var obj = JSON.parse(data);
-
-        test.ok(_.isObject(obj), 'parsed object correctly');
-        test.equal(obj.hello, 'world', 'object contains correct data');
-        test.done();
-      });
-    });
+    test.ok(grunt.file.isFile('test/TEST_SUCCESSFUL'), 'file found');
+    test.done();
   }
 };
