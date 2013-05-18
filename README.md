@@ -1,4 +1,4 @@
-# grunt-external-daemon
+# grunt-external-daemon [![Build Status](https://travis-ci.org/jlindsey/grunt-external-daemon.png?branch=master)](https://travis-ci.org/jlindsey/grunt-external-daemon)
 
 Grunt Task to start external background processes.
 
