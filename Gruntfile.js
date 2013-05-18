@@ -42,6 +42,15 @@ module.exports = function(grunt) {
         cmd: 'node',
         args: ['test/fixtures/server_1.js']
       },
+      server_1a: {
+        options: {
+          startCheckInterval: 5.0,
+          startCheck: function() { return false; },
+          startCheckTimeout: false
+        },
+        cmd: 'node',
+        args: ['test/fixtures/server_1.js']
+      },
       server_2: {
         options: {
           startCheck: function(stdout, stderr) {
