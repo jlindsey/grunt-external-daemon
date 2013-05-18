@@ -18,6 +18,9 @@
   "engines": {
     "node": ">= 0.8.0"
   },
+  "scripts": {
+    "test": "grunt"
+  },
   "dependencies": {
     "underscore": "~> 1.4.4"
   },
