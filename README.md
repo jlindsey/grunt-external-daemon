@@ -78,6 +78,12 @@ The time in seconds before the task times out if `startCheck` has not yet return
 
 Setting this to `false` disables the timeout.
 
+### killSignal
+Type: `string`
+Default: `SIGTERM`
+
+The signal sent to the process to kill it.
+
 ### Usage Examples
 
 Launch a CouchDB instance and wait for it to fully boot.
