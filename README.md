@@ -84,6 +84,18 @@ Default: `SIGTERM`
 
 The signal sent to the process to kill it.
 
+### stdout
+Type: `fd`
+Default: `undefined`
+
+An open file descriptor to write stdout of the daemon process to.
+
+### stderr
+Type: `fd`
+Default: `undefined`
+
+An open file descriptor to write stderr of the daemon process to. Can be the same stream as `options.stdout`.
+
 ### Usage Examples
 
 Launch a CouchDB instance and wait for it to fully boot.

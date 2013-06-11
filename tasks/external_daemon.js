@@ -64,6 +64,11 @@
       grunt.verbose.write(util.format("[%s STDOUT] %s"), cmd, result.stdout);
       grunt.verbose.write(util.format("[%s STDERR] %s"), cmd, result.stderr);
 
+      if (typeof options.stdout === 'number')
+        fs.closeSync(options.stdout)
+      if (typeof options.stderr === 'number' && options.stderr !== options.stdout)
+        fs.closeSync(options.stderr);
+
       grunt.log.warn(util.format("Command %s exited with status code %s", cmd, code));
     });
 
@@ -73,10 +78,20 @@
     proc.stdout.on('data', function(data) {
       stdout.push(data);
       logFunc(util.format("[%s STDOUT] %s", cmd, data));
+
+      if (typeof options.stdout === 'number') {
+        var buf = new Buffer(data);
+        fs.writeSync(options.stdout, buf, 0, buf.length);
+      }
     });
     proc.stderr.on('data', function(data) {
       stderr.push(data);
       logFunc(util.format("[%s STDERR] %s", cmd, data));
+
+      if (typeof options.stderr === 'number') {
+        var buf = new Buffer(data);
+        fs.writeSync(options.stderr, buf, 0, buf.length);
+      }
     });
 
     grunt.event.on(startedEventName, function() {
