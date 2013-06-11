@@ -22,7 +22,8 @@
       nodeSpawnOptions: {},
       startCheck: function() { return true; },
       startCheckInterval: 0.5,
-      startCheckTimeout: 3.0
+      startCheckTimeout: 3.0,
+      killSignal: 'SIGTERM'
     });
     var name = this.target;
     var cmd = this.data.cmd;
@@ -32,10 +33,10 @@
         failTimeoutTime   = (options.startCheckTimeout * 1000);
     var logFunc = (options.verbose) ? grunt.log.write : grunt.verbose.write;
     var proc, failTimeoutHandle, checkIntervalHandle, stdout = [], stderr = [];
-    var handleSig = function () { proc.kill(); done(); };
+    var handleSig = function () { proc.kill(options.killSignal); done(); };
 
     // Make sure we don't leave behind any dangling processes.
-    process.on('exit', function() { proc.kill(); });
+    process.on('exit', function() { proc.kill(options.killSignal); });
     process.on('SIGTERM', handleSig);
     process.on('SIGHUP', handleSig);
     process.on('SIGINT', handleSig);
@@ -63,6 +64,11 @@
       grunt.verbose.write(util.format("[%s STDOUT] %s"), cmd, result.stdout);
       grunt.verbose.write(util.format("[%s STDERR] %s"), cmd, result.stderr);
 
+      if (typeof options.stdout === 'number')
+        fs.closeSync(options.stdout)
+      if (typeof options.stderr === 'number' && options.stderr !== options.stdout)
+        fs.closeSync(options.stderr);
+
       grunt.log.warn(util.format("Command %s exited with status code %s", cmd, code));
     });
 
@@ -72,10 +78,20 @@
     proc.stdout.on('data', function(data) {
       stdout.push(data);
       logFunc(util.format("[%s STDOUT] %s", cmd, data));
+
+      if (typeof options.stdout === 'number') {
+        var buf = new Buffer(data);
+        fs.writeSync(options.stdout, buf, 0, buf.length);
+      }
     });
     proc.stderr.on('data', function(data) {
       stderr.push(data);
       logFunc(util.format("[%s STDERR] %s", cmd, data));
+
+      if (typeof options.stderr === 'number') {
+        var buf = new Buffer(data);
+        fs.writeSync(options.stderr, buf, 0, buf.length);
+      }
     });
 
     grunt.event.on(startedEventName, function() {
