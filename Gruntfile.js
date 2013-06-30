@@ -99,6 +99,7 @@ module.exports = function(grunt) {
       },
       output_server_1: {
         options: {
+          startCheck: function (stdout) { return (stdout.indexOf('STDOUT Message') > -1); },
           stdout: fs.openSync('test/OUTPUT', 'w')
         },
         cmd: 'node',
@@ -106,6 +107,7 @@ module.exports = function(grunt) {
       },
       output_server_2: {
         options: {
+          startCheck: function (stdout) { return (stdout.indexOf('STDOUT Message') > -1); },
           stderr: fs.openSync('test/OUTPUT', 'w')
         },
         cmd: 'node',
@@ -135,6 +137,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('default', ['jshint', 'nodeunit', 'clean']);
+  grunt.registerTask('default', ['clean', 'jshint', 'nodeunit', 'clean']);
   grunt.registerTask('dev', ['default', 'watch']);
 };
