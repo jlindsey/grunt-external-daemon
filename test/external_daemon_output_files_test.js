@@ -13,7 +13,7 @@ var grunt = require('grunt'),
     read  = require('fs').readFileSync;
 
 function readFile(fn) {
-  return read(fn, { encoding: 'utf-8' });
+  return read(fn, { encoding: 'utf8' });
 }
 
 exports.stdout_test = function(test) {
