@@ -7,6 +7,12 @@
     "name": "Josh Lindsey",
     "email": "joshua.s.lindsey@gmail.com"
   },
+  "contributors": [
+    {
+      "name": "Chase Douglas",
+      "email": "chasedouglas@gmail.com"
+    }
+  ],
   "license": {
     "type": "MIT",
     "url": "https://github.com/jlindsey/grunt-external-daemon/blob/master/LICENSE"
