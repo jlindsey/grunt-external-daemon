@@ -8,10 +8,12 @@
  
 'use strict';
 
+var fs = require('fs');
+
 module.exports = function(grunt) {
   grunt.initConfig({
     clean: {
-      test: ['test/TEST_SUCCESSFUL', 'test/SIGTERM', 'test/SIGUSR2']
+      test: ['test/TEST_SUCCESSFUL', 'test/SIGTERM', 'test/SIGUSR2', 'test/OUTPUT']
     },
 
     jshint: {
@@ -94,6 +96,20 @@ module.exports = function(grunt) {
         },
         cmd: 'node',
         args: ['test/fixtures/signal_server.js']
+      },
+      output_server_1: {
+        options: {
+          stdout: fs.openSync('test/OUTPUT', 'w')
+        },
+        cmd: 'node',
+        args: ['test/fixtures/output_server.js']
+      },
+      output_server_2: {
+        options: {
+          stderr: fs.openSync('test/OUTPUT', 'w')
+        },
+        cmd: 'node',
+        args: ['test/fixtures/output_server.js']
       }
     },
 
