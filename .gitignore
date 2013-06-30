@@ -1,2 +1,5 @@
 node_modules/
 test/TEST_SUCCESSFUL
+test/OUTPUT
+test/SIGTERM
+test/SIGUSR2
