@@ -11,7 +11,7 @@
 module.exports = function(grunt) {
   grunt.initConfig({
     clean: {
-      test: ['test/TEST_SUCCESSFUL']
+      test: ['test/TEST_SUCCESSFUL', 'test/SIGTERM', 'test/SIGUSR2']
     },
 
     jshint: {
@@ -83,6 +83,17 @@ module.exports = function(grunt) {
           startCheck: false
         },
         cmd: 'echo'
+      },
+      signal_server_1: {
+        cmd: 'node',
+        args: ['test/fixtures/signal_server.js']
+      },
+      signal_server_2: {
+        options: {
+          killSignal: 'SIGUSR2'
+        },
+        cmd: 'node',
+        args: ['test/fixtures/signal_server.js']
       }
     },
 
