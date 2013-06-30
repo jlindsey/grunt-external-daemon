@@ -64,13 +64,13 @@ This is useful when you are starting a daemon process in the middle of a Grunt t
 running before executing themselves. For instance, starting a node server with [grunt-develop](https://github.com/edwardhotchkiss/grunt-develop)
 that requires a running CouchDB instance.
 
-### startCheckInterval
+#### startCheckInterval
 Type: `float`
 Default: `0.5`
 
 The interval in seconds between `startCheck` invocations.
 
-### startCheckTimeout
+#### startCheckTimeout
 Type `float`
 Default: `5.0`
 
@@ -78,19 +78,19 @@ The time in seconds before the task times out if `startCheck` has not yet return
 
 Setting this to `false` disables the timeout.
 
-### killSignal
+#### killSignal
 Type: `string`
 Default: `SIGTERM`
 
 The signal sent to the process to kill it.
 
-### stdout
+#### stdout
 Type: `fd`
 Default: `undefined`
 
 An open file descriptor to write stdout of the daemon process to.
 
-### stderr
+#### stderr
 Type: `fd`
 Default: `undefined`
 
