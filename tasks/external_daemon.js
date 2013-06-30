@@ -64,10 +64,12 @@
       grunt.verbose.write(util.format("[%s STDOUT] %s"), cmd, result.stdout);
       grunt.verbose.write(util.format("[%s STDERR] %s"), cmd, result.stderr);
 
-      if (typeof options.stdout === 'number')
-        fs.closeSync(options.stdout)
-      if (typeof options.stderr === 'number' && options.stderr !== options.stdout)
+      if (typeof options.stdout === 'number') {
+        fs.closeSync(options.stdout);
+      }
+      if (typeof options.stderr === 'number' && options.stderr !== options.stdout) {
         fs.closeSync(options.stderr);
+      }
 
       grunt.log.warn(util.format("Command %s exited with status code %s", cmd, code));
     });
