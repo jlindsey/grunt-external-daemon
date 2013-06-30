@@ -8,5 +8,8 @@
 
 'use strict';
 
+process.stdout.setEncoding('utf-8');
+process.stderr.setEncoding('utf-8');
+
 process.stdout.write("STDOUT Message");
 process.stderr.write("STDERR Message");
