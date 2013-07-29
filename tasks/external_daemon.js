@@ -62,10 +62,16 @@
     cmd = path.normalize(grunt.template.process(cmd));
     args = _.map(args, function(arg) { return grunt.template.process(arg); });
 
+    var opts = {};
+    _.each(options.nodeSpawnOptions, function (val, key) {
+        opts[key] = grunt.template.process(val);
+    });
+
+    grunt.verbose.write("external_daemon: spawn", cmd, args, "\n");
     proc = grunt.util.spawn({
       cmd: cmd,
       args: args,
-      opts: options.nodeSpawnOptions
+      opts: opts
     }, function (error, result, code) {
       grunt.verbose.write(util.format("[%s STDOUT] %s"), cmd, result.stdout);
       grunt.verbose.write(util.format("[%s STDERR] %s"), cmd, result.stderr);
